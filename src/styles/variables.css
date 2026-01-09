@@ -1,0 +1,58 @@
+:root {
+  /* Brand Palette - Gold & Black */
+  --color-primary: #D4AF37;
+  /* Gold */
+  --color-primary-hover: #B4941F;
+  /* Darker Gold for hover */
+  --color-primary-light: #FEF3C7;
+  /* Light Yellow/Gold for backgrounds */
+
+  --color-secondary: #000000;
+  /* Black */
+  --color-secondary-hover: #1a1a1a;
+
+  /* Neutral Scale */
+  --color-bg-page: #F9FAFB;
+  /* Light Gray for Content Area */
+  --color-bg-card: #FFFFFF;
+  --color-text-main: #111827;
+  /* Near Black */
+  --color-text-secondary: #6B7280;
+  /* Gray */
+  --color-border: #E5E7EB;
+
+  /* Sidebar/Dark Context */
+  --color-sidebar-bg: #000000;
+  --color-sidebar-text: #E5E7EB;
+  --color-sidebar-active: #1a1a1a;
+  --color-sidebar-border: #333333;
+
+  /* Typography */
+  --font-family-base: 'Inter', system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Status Colors (Keep functional) */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #D4AF37;
+  /* Use Gold for Info now */
+}
