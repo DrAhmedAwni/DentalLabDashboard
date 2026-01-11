@@ -43,11 +43,17 @@ const Cases: React.FC = () => {
             setDoctors(docList);
 
             // Update basic stats
+            // Final Ready to Deliver and Final Delivered are considered completed
+            const completedStatuses = ['final_ready_to_deliver', 'final_delivered'];
+            const activeStatuses = ['submitted', 'pouring_scan', 'design', 'waiting_for_confirmation',
+                'tryin_printing', 'tryin_ready_to_deliver', 'tryin_delivered',
+                'sintring', 'stain_glaze'];
+
             setStats({
                 total: loadedCases.length,
-                active: loadedCases.filter((c: any) => !['delivered', 'completed', 'cancelled'].includes(c.stage)).length,
-                completed: loadedCases.filter((c: any) => ['delivered', 'completed'].includes(c.stage)).length,
-                late: loadedCases.filter((c: any) => new Date(c.due_date) < new Date() && !['delivered', 'completed'].includes(c.stage)).length
+                active: loadedCases.filter((c: any) => activeStatuses.includes(c.stage)).length,
+                completed: loadedCases.filter((c: any) => completedStatuses.includes(c.stage)).length,
+                late: loadedCases.filter((c: any) => new Date(c.due_date) < new Date() && !completedStatuses.includes(c.stage)).length
             });
 
         } catch (error) {
@@ -58,15 +64,56 @@ const Cases: React.FC = () => {
     };
 
     const getStageColor = (stage: string) => {
-        const map: any = {
+        // Complete status workflow based on user's image
+        const statusMap: any = {
+            // Initial stages - Blue tones
+            'submitted': 'bg-blue-100 text-blue-800',
+            'pouring_scan': 'bg-cyan-100 text-cyan-800',
+
+            // Design phase - Purple tones
+            'design': 'bg-purple-100 text-purple-800',
+            'waiting_for_confirmation': 'bg-amber-100 text-amber-800',
+
+            // Try-in phase - Yellow/Orange tones
+            'tryin_printing': 'bg-yellow-100 text-yellow-800',
+            'tryin_ready_to_deliver': 'bg-orange-100 text-orange-800',
+            'tryin_delivered': 'bg-orange-200 text-orange-900',
+
+            // Final processing - Indigo tones
+            'sintring': 'bg-indigo-100 text-indigo-800',
+            'stain_glaze': 'bg-violet-100 text-violet-800',
+
+            // Completion - Green tones (Final stages)
+            'final_ready_to_deliver': 'bg-green-100 text-green-800',
+            'final_delivered': 'bg-green-200 text-green-900', // Invoice sent, payment link provided
+
+            // Legacy/other statuses
             'new': 'bg-blue-100 text-blue-800',
             'in_progress': 'bg-yellow-100 text-yellow-800',
-            'design': 'bg-purple-100 text-purple-800',
             'printing': 'bg-indigo-100 text-indigo-800',
             'delivered': 'bg-green-100 text-green-800',
-            'hold': 'bg-red-100 text-red-800'
+            'hold': 'bg-red-100 text-red-800',
+            'cancelled': 'bg-gray-100 text-gray-800'
         };
-        return map[stage] || 'bg-gray-100 text-gray-800';
+        return statusMap[stage] || 'bg-gray-100 text-gray-800';
+    };
+
+    const formatStageName = (stage: string) => {
+        // Format stage names for display
+        const nameMap: any = {
+            'submitted': 'Submitted',
+            'pouring_scan': 'Pouring/Scan',
+            'design': 'Design',
+            'waiting_for_confirmation': 'Waiting for Confirmation',
+            'tryin_printing': 'Try-in Printing',
+            'tryin_ready_to_deliver': 'Try-in Ready to Deliver',
+            'tryin_delivered': 'Try-in Delivered',
+            'sintring': 'Sintering',
+            'stain_glaze': 'Stain & Glaze',
+            'final_ready_to_deliver': 'Final Ready to Deliver',
+            'final_delivered': 'Final Delivered ✓', // Indicates invoice sent
+        };
+        return nameMap[stage] || stage.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     };
 
     return (
@@ -137,11 +184,17 @@ const Cases: React.FC = () => {
                             onChange={(e) => setStageFilter(e.target.value)}
                         >
                             <option value="all">All Stages</option>
-                            <option value="new">New</option>
-                            <option value="in_progress">In Progress</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="pouring_scan">Pouring/Scan</option>
                             <option value="design">Design</option>
-                            <option value="printing">Printing</option>
-                            <option value="delivered">Delivered</option>
+                            <option value="waiting_for_confirmation">Waiting for Confirmation</option>
+                            <option value="tryin_printing">Try-in Printing</option>
+                            <option value="tryin_ready_to_deliver">Try-in Ready to Deliver</option>
+                            <option value="tryin_delivered">Try-in Delivered</option>
+                            <option value="sintring">Sintering</option>
+                            <option value="stain_glaze">Stain & Glaze</option>
+                            <option value="final_ready_to_deliver">Final Ready to Deliver</option>
+                            <option value="final_delivered">Final Delivered</option>
                         </select>
 
                         <select
@@ -182,7 +235,7 @@ const Cases: React.FC = () => {
                                         <td className="py-3">{c.doctors?.full_name}</td>
                                         <td className="py-3">
                                             <span className={`px-2 py-1 rounded-full text-xs font-semibold ${getStageColor(c.stage)}`}>
-                                                {c.stage.replace('_', ' ')}
+                                                {formatStageName(c.stage)}
                                             </span>
                                         </td>
                                         <td className="py-3 text-gray-500">

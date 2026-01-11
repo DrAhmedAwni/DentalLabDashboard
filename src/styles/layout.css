@@ -252,6 +252,11 @@
 
 /* Mobile (below 768px) */
 @media (max-width: 768px) {
+    .layout-container {
+        height: 100vh;
+        overflow: hidden;
+    }
+
     .mobile-menu-toggle {
         display: block;
     }
@@ -273,10 +278,17 @@
         transform: translateX(0);
     }
 
+    .main-content {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
     .top-header {
         padding: 1rem;
         padding-left: 4rem;
         min-height: auto;
+        flex-shrink: 0;
     }
 
     .page-title {
@@ -301,6 +313,11 @@
 
     .content-area {
         padding: 0 1rem 1rem 1rem;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        height: auto;
     }
 }
 
