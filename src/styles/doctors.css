@@ -49,6 +49,7 @@
     font-size: 1.5rem;
     border: 2px solid white;
     box-shadow: var(--shadow-sm);
+    flex-shrink: 0;
 }
 
 .doctor-info h3 {
@@ -59,6 +60,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 .doctor-info p {
@@ -72,7 +74,6 @@
     padding: 2px 8px;
     background-color: var(--color-sidebar-bg);
     color: var(--color-primary);
-    /* Gold text on black/dark bg */
     border-radius: var(--radius-full);
     font-size: 0.75rem;
     font-weight: 600;
@@ -104,4 +105,71 @@
     font-size: 1rem;
     font-weight: 700;
     color: var(--color-text-main);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .doctor-card {
+        padding: var(--spacing-md);
+    }
+
+    .doctor-avatar {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .doctor-info h3 {
+        font-size: 1rem;
+    }
+
+    .doctor-info p {
+        font-size: 0.8125rem;
+    }
+
+    .case-badge {
+        font-size: 0.7rem;
+        padding: 2px 6px;
+    }
+
+    .doctor-stats {
+        gap: var(--spacing-sm);
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .stat-value {
+        font-size: 0.9375rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .doctor-card {
+        padding: 1rem;
+    }
+
+    .doctor-header {
+        gap: 0.75rem;
+    }
+
+    .doctor-avatar {
+        width: 42px;
+        height: 42px;
+        font-size: 1.125rem;
+    }
+
+    .doctor-info h3 {
+        font-size: 0.9375rem;
+    }
+
+    .doctor-info p {
+        font-size: 0.75rem;
+    }
+
+    .doctor-stats {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
 }

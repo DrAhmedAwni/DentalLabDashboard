@@ -21,6 +21,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: capitalize;
+    white-space: nowrap;
 }
 
 .status-pending {
@@ -69,6 +70,7 @@
     border-color: var(--color-primary);
 }
 
+/* Responsive Design */
 @media (max-width: 1280px) {
     .finance-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -76,5 +78,42 @@
 
     .finance-main {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .finance-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .finance-main {
+        gap: var(--spacing-md);
+    }
+
+    .status-badge {
+        padding: 3px 10px;
+        font-size: 0.7rem;
+    }
+
+    .filter-select {
+        font-size: 0.8125rem;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .finance-grid {
+        gap: 0.75rem;
+    }
+
+    .status-badge {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+    }
+
+    .action-btn {
+        padding: 4px;
     }
 }

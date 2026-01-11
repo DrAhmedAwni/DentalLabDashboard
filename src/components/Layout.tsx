@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderKanban, DollarSign, Package, Users, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, DollarSign, Package, Users, Settings, LogOut, Menu, X } from 'lucide-react';
 import '../styles/layout.css';
 
 import logo from '../assets/logo.png';
@@ -11,34 +11,58 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const location = useLocation();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const isActive = (path: string) => location.pathname === path;
 
+    const closeMobileMenu = () => {
+        setMobileMenuOpen(false);
+    };
+
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
+    };
+
     return (
         <div className="layout-container">
-            <aside className="sidebar">
+            {/* Mobile Menu Toggle Button */}
+            <button
+                className="mobile-menu-toggle"
+                onClick={toggleMobileMenu}
+                aria-label="Toggle menu"
+            >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
+            {/* Sidebar Overlay for Mobile */}
+            <div
+                className={`sidebar-overlay ${mobileMenuOpen ? 'active' : ''}`}
+                onClick={closeMobileMenu}
+            />
+
+            <aside className={`sidebar ${mobileMenuOpen ? 'mobile-open' : ''}`}>
                 <div className="sidebar-header">
                     <img src={logo} alt="DentalMed" className="logo-image" />
                 </div>
 
                 <nav className="sidebar-nav">
-                    <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>
+                    <Link to="/" className={`nav-item ${isActive('/') ? 'active' : ''}`} onClick={closeMobileMenu}>
                         <LayoutDashboard size={20} />
                         <span>Dashboard</span>
                     </Link>
-                    <Link to="/cases" className={`nav-item ${isActive('/cases') ? 'active' : ''}`}>
+                    <Link to="/cases" className={`nav-item ${isActive('/cases') ? 'active' : ''}`} onClick={closeMobileMenu}>
                         <FolderKanban size={20} />
                         <span>Cases</span>
                     </Link>
-                    <Link to="/finance" className={`nav-item ${isActive('/finance') ? 'active' : ''}`}>
+                    <Link to="/finance" className={`nav-item ${isActive('/finance') ? 'active' : ''}`} onClick={closeMobileMenu}>
                         <DollarSign size={20} />
                         <span>Finance</span>
                     </Link>
-                    <Link to="/inventory" className={`nav-item ${isActive('/inventory') ? 'active' : ''}`}>
+                    <Link to="/inventory" className={`nav-item ${isActive('/inventory') ? 'active' : ''}`} onClick={closeMobileMenu}>
                         <Package size={20} />
                         <span>Inventory</span>
                     </Link>
-                    <Link to="/doctors" className={`nav-item ${isActive('/doctors') ? 'active' : ''}`}>
+                    <Link to="/doctors" className={`nav-item ${isActive('/doctors') ? 'active' : ''}`} onClick={closeMobileMenu}>
                         <Users size={20} />
                         <span>Doctors</span>
                     </Link>
